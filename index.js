@@ -9,7 +9,6 @@ window._sfm = {
         show_search_box: true,
         show_file_info_box: true,
         show_sidebar_box: true,
-        cdn: '',
         // for premium version
         beforeLoad: function (event) {
             console.log('sfm before load')
@@ -27,13 +26,6 @@ window._sfm = {
             console.log('sfm on close')
             console.log(event)
         },
-        windowOptions: {
-            name: 'softdy_file_management_iframe',
-            width: '100%',
-            height: '100%',
-            allowfullscreen: true,
-            allowpaymentrequest: true,
-        }
     },
     url: null,
     init(options) {
@@ -121,9 +113,9 @@ window._sfm = {
                 })
             }
 
-            if (this.options.cdn) {
+            if (this.options.rootElementId) {
                 endpoint = this.addParams(endpoint, {
-                    cdn: this.options.cdn
+                    rootElementId: this.options.rootElementId
                 })
             }
             if (this.options.token) {
