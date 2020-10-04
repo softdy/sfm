@@ -3,7 +3,7 @@ window._sfm = {
         type: 'window', // window|iframe
         endpoint: '',
         token: '',
-        target_id: 'root', //
+        container_id: 'root', //
         mode: 'management', // management|select_files
         show_header_box: true,
         show_search_box: true,
@@ -67,16 +67,16 @@ window._sfm = {
     },
     _listenEvent(win) {
         win.addEventListener('message', function (event) {
-            if (event.data.function_name === "select_callback_function" + window._sfm.options.target_id) {
+            if (event.data.function_name === "select_callback_function" + window._sfm.options.container_id) {
                 return window._sfm.options.onSelect(event.data.data)
             }
-            if (event.data.function_name === "close_callback_function" + window._sfm.options.target_id) {
+            if (event.data.function_name === "close_callback_function" + window._sfm.options.container_id) {
                 return window._sfm.options.onClose(event.data.data)
             }
-            if (event.data.function_name === "before_load_callback_function" + window._sfm.options.target_id) {
+            if (event.data.function_name === "before_load_callback_function" + window._sfm.options.container_id) {
                 return window._sfm.options.beforeLoad(event.data.data)
             }
-            if (event.data.function_name === "after_load_callback_function" + window._sfm.options.target_id) {
+            if (event.data.function_name === "after_load_callback_function" + window._sfm.options.container_id) {
                 return window._sfm.options.afterLoad(event.data.data)
             }
         }, false)
@@ -87,8 +87,8 @@ window._sfm = {
     _isWindowType() {
         return this.options.type === 'window'
     },
-    _getTargetId() {
-        return this.options.target_id
+    _getContainerId() {
+        return this.options.container_id
     },
     _buildUrl() {
         let endpoint = this.options.endpoint
@@ -113,9 +113,9 @@ window._sfm = {
                 })
             }
 
-            if (this.options.target_id) {
+            if (this.options.container_id) {
                 endpoint = this.addParams(endpoint, {
-                    target_id: this.options.target_id
+                    container_id: this.options.container_id
                 })
             }
             if (this.options.token) {
@@ -133,7 +133,7 @@ window._sfm = {
         this.init(options)
         if (this._isIframeType()) {
             var iframe = '<iframe src="' + this.getUrl() + '" style="height:100%;width:100%;border: none;padding: 0;margin:0"></iframe>';
-            return document.getElementById(this._getTargetId()).innerHTML = iframe;
+            return document.getElementById(this._getContainerId()).innerHTML = iframe;
         }
 
         if (this._isWindowType()) {
