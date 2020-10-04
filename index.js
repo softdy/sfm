@@ -1,9 +1,9 @@
 window._sfm = {
     options: {
-        type: 'widget', // widget|iframe
+        type: 'window', // window|iframe
         endpoint: '',
         token: '',
-        rootElementId: 'root', //
+        target_id: 'root', //
         mode: 'management', // management|select_files
         show_header_box: true,
         show_search_box: true,
@@ -67,16 +67,16 @@ window._sfm = {
     },
     _listenEvent(win) {
         win.addEventListener('message', function (event) {
-            if (event.data.function_name === "select_callback_function" + window._sfm.options.rootElementId) {
+            if (event.data.function_name === "select_callback_function" + window._sfm.options.target_id) {
                 return window._sfm.options.onSelect(event.data.data)
             }
-            if (event.data.function_name === "close_callback_function" + window._sfm.options.rootElementId) {
+            if (event.data.function_name === "close_callback_function" + window._sfm.options.target_id) {
                 return window._sfm.options.onClose(event.data.data)
             }
-            if (event.data.function_name === "before_load_callback_function" + window._sfm.options.rootElementId) {
+            if (event.data.function_name === "before_load_callback_function" + window._sfm.options.target_id) {
                 return window._sfm.options.beforeLoad(event.data.data)
             }
-            if (event.data.function_name === "after_load_callback_function" + window._sfm.options.rootElementId) {
+            if (event.data.function_name === "after_load_callback_function" + window._sfm.options.target_id) {
                 return window._sfm.options.afterLoad(event.data.data)
             }
         }, false)
@@ -87,8 +87,8 @@ window._sfm = {
     _isWindowType() {
         return this.options.type === 'window'
     },
-    _getRootElementId() {
-        return this.options.rootElementId
+    _getTargetId() {
+        return this.options.target_id
     },
     _buildUrl() {
         let endpoint = this.options.endpoint
@@ -113,9 +113,9 @@ window._sfm = {
                 })
             }
 
-            if (this.options.rootElementId) {
+            if (this.options.target_id) {
                 endpoint = this.addParams(endpoint, {
-                    rootElementId: this.options.rootElementId
+                    target_id: this.options.target_id
                 })
             }
             if (this.options.token) {
@@ -133,7 +133,7 @@ window._sfm = {
         this.init(options)
         if (this._isIframeType()) {
             var iframe = '<iframe src="' + this.getUrl() + '" style="height:100%;width:100%;border: none;padding: 0;margin:0"></iframe>';
-            return document.getElementById(this._getRootElementId()).innerHTML = iframe;
+            return document.getElementById(this._getTargetId()).innerHTML = iframe;
         }
 
         if (this._isWindowType()) {
