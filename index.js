@@ -9,6 +9,7 @@ window._sfm = {
         show_search_box: true,
         show_file_info_box: true,
         show_sidebar_box: true,
+        full_width: false,
         // for premium version
         beforeLoad: function (event) {
             console.log('sfm before load')
@@ -95,10 +96,11 @@ window._sfm = {
         if (this._isIframeType() || this._isWindowType()) {
             endpoint = this.addParams(endpoint, {
                 mode: this.options.mode,
-                show_header_box: this.options.show_header_box,
-                show_search_box: this.options.show_search_box,
-                show_file_info_box: this.options.show_file_info_box,
-                show_sidebar_box: this.options.show_sidebar_box,
+                show_header_box: this.options.show_header_box  ? 'true' : 'false',
+                show_search_box: this.options.show_search_box ? 'true' : 'false',
+                show_file_info_box: this.options.show_file_info_box ? 'true' : 'false' ,
+                show_sidebar_box: this.options.show_sidebar_box ? 'true' : 'false',
+                full_width: this.options.full_width ? 'true' : 'false',
             })
 
             if (this._isWindowType()) {
