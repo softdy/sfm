@@ -100,8 +100,13 @@ window._sfm = {
                 show_search_box: this.options.show_search_box ? 'true' : 'false',
                 show_file_info_box: this.options.show_file_info_box ? 'true' : 'false' ,
                 show_sidebar_box: this.options.show_sidebar_box ? 'true' : 'false',
-                full_width: this.options.full_width ? 'true' : 'false',
             })
+			
+			if(this.options.full_width){
+				endpoint = this.addParams(endpoint, {
+					full_width: this.options.full_width ? 'true' : 'false',
+				})	
+			}
 
             if (this._isWindowType()) {
                 endpoint = this.addParams(endpoint, {
